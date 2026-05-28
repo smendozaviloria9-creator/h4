@@ -6,7 +6,7 @@
     --color-accent: #4f46e5;
     --color-accent-hover: #4338ca;
     --color-danger: #ef4444;
-    --color-danger-hover: #dc2626;
+    --color-danger-hover: #ff0000;
     --border-radius: 8px;
     --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     --transition: all 0.2s ease-in-out;
@@ -107,14 +107,14 @@ button {
     background-color: #e2e8f0;
 }
 
-#taskList {
+#productList {
     list-style: none;
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
 }
 
-#taskList li {
+#productList li {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -125,12 +125,12 @@ button {
     animation: fadeIn 0.3s ease;
 }
 
-#taskList li span {
+#productList li span {
     font-size: 1rem;
     word-break: break-word;
 }
 
-#taskList li button {
+#productList li button {
     background-color: transparent;
     color: var(--color-danger);
     padding: 0.25rem 0.5rem;
@@ -138,9 +138,9 @@ button {
     border: 1px solid transparent;
 }
 
-#taskList li button:hover {
+#productList li button:hover {
     border-color: var(--color-danger);
-    background-color: #fef2f2;
+    background-color: #ffffff;
     border-radius: 4px;
 }
 
