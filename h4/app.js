@@ -1,9 +1,11 @@
 const API_URL = "https://jsonplaceholder.typicode.com/posts";
+
 const taskForm = document.getElementById("productForm");
 const productName = document.getElementById("productName");
 const productPrice = document.getElementById("productPrice");
 const taskList = document.getElementById("productList");
 const syncBtn = document.getElementById("syncBtn");
+
 let productos = [];
 
 function cargarProductos() {
@@ -18,11 +20,6 @@ function cargarProductos() {
     }
 }
 
-
-// ==========================
-// GUARDAR PRODUCTOS
-// ==========================
-
 function guardarProductos() {
 
     localStorage.setItem(
@@ -31,66 +28,47 @@ function guardarProductos() {
     );
 }
 
-
-// ==========================
-// MOSTRAR PRODUCTOS EN EL DOM
-// ==========================
-
 function renderProductos() {
 
-    // Limpiar lista
-    productList.innerHTML = "";
+    taskList.innerHTML = "";
 
-    // Recorrer arreglo
     productos.forEach((producto, index) => {
 
-        // Crear li
         const li = document.createElement("li");
 
-        // Crear texto
         const texto = document.createElement("span");
 
-      texto.textContent = `
-      ${index + 1}. ${producto.nombre} - $${producto.precio}
-      `;
-        // Crear botón eliminar
+        texto.textContent = `
+        ${index + 1}. ${producto.nombre} - $${producto.precio}
+        `;
+
         const btnEliminar = document.createElement("button");
 
         btnEliminar.textContent = "Eliminar";
 
-        // Evento eliminar
         btnEliminar.addEventListener("click", () => {
 
             eliminarProducto(index);
 
         });
 
-        // Agregar elementos
         li.appendChild(texto);
 
         li.appendChild(btnEliminar);
 
-        productList.appendChild(li);
+        taskList.appendChild(li);
 
     });
 }
 
+taskForm.addEventListener("submit", async (e) => {
 
-
-// AGREGAR PRODUCTO
-
-
-productForm.addEventListener("submit", async (e) => {
-
-    // Evitar recarga
     e.preventDefault();
 
-    // Obtener valores
     const nombre = productName.value.trim();
 
     const precio = productPrice.value.trim();
 
-    // Validar campos
     if (nombre === "" || precio === "") {
 
         alert("Todos los campos son obligatorios");
@@ -100,7 +78,6 @@ productForm.addEventListener("submit", async (e) => {
         return;
     }
 
-    // Crear objeto
     const nuevoProducto = {
 
         nombre: nombre,
@@ -109,50 +86,32 @@ productForm.addEventListener("submit", async (e) => {
 
     };
 
-    // Guardar en arreglo
     productos.push(nuevoProducto);
 
-    // Guardar localStorage
     guardarProductos();
 
-    // Mostrar en pantalla
     renderProductos();
 
-    // Enviar a API
     await agregarProductoAPI(nuevoProducto);
 
     console.log("Producto agregado");
 
-    // Limpiar inputs
     productName.value = "";
 
     productPrice.value = "";
 
 });
 
-
-// ==========================
-// ELIMINAR PRODUCTO
-// ==========================
-
 function eliminarProducto(index) {
 
-    // Eliminar del arreglo
     productos.splice(index, 1);
 
-    // Actualizar localStorage
     guardarProductos();
 
-    // Renderizar nuevamente
     renderProductos();
 
     console.log("Producto eliminado");
 }
-
-
-// ==========================
-// GET
-// ==========================
 
 async function obtenerProductosAPI() {
 
@@ -171,15 +130,12 @@ async function obtenerProductosAPI() {
     }
 }
 
-
-// ==========================
-// POST
-// ==========================
-
 async function agregarProductoAPI(producto) {
 
     try {
-        console.log("enviando producto")
+
+        console.log("Enviando producto");
+
         const respuesta = await fetch(API_URL, {
 
             method: "POST",
@@ -204,11 +160,6 @@ async function agregarProductoAPI(producto) {
 
     }
 }
-
-
-// ==========================
-// PUT
-// ==========================
 
 async function actualizarProductoAPI(id, productoActualizado) {
 
@@ -239,11 +190,6 @@ async function actualizarProductoAPI(id, productoActualizado) {
     }
 }
 
-
-// ==========================
-// DELETE
-// ==========================
-
 async function eliminarProductoAPI(id) {
 
     try {
@@ -263,20 +209,10 @@ async function eliminarProductoAPI(id) {
     }
 }
 
-
-// ==========================
-// BOTÓN SINCRONIZAR
-// ==========================
-
 syncBtn.addEventListener("click", () => {
 
     obtenerProductosAPI();
 
 });
-
-
-// ==========================
-// INICIAR APP
-// ==========================
 
 cargarProductos();
